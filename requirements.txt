@@ -1,5 +1,6 @@
 Django>=2.1.3,<3.0.6
 djangorestframework>=3.9.0
 psycopg2>=2.7.5,<2.8.5
+django-cors-headers
 
 flake8>=3.6.0,<3.7.0
