@@ -5,7 +5,7 @@ from core import models
 
 def sample_user(email='test@something.com', password='test123'):
     """create a sample user"""
-    return get_user_model().objects.create_user(email,password)
+    return get_user_model().objects.create_user(email, password)
 
 
 class ModelTests(TestCase):
@@ -19,8 +19,7 @@ class ModelTests(TestCase):
             password=password
         )
 
-        
-        self.assertEqual(user.email,email)
+        self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
 
     def test_new_user_email_normalized(self):
@@ -29,12 +28,12 @@ class ModelTests(TestCase):
         user = get_user_model().objects.create_user(email, 'test123')
 
         self.assertEqual(user.email, email.lower())
-    
+
     def test_new_user_invalid_email(self):
         """test creating user with email raises error"""
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, 'test123')
-    
+
     def test_create_new_superuser(self):
         """test creating a new user"""
         user = get_user_model().objects.create_superuser(
@@ -53,12 +52,23 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(tag), tag.name)
-    
+
     def test_ingredient_str(self):
         """test the ingredient string representation"""
         ingredient = models.Ingredient.objects.create(
             user=sample_user(),
             name='Cucumber'
         )
-        
+
         self.assertEqual(str(ingredient), ingredient.name)
+
+    def test_recipe_str(self):
+        """test the recipe string representation"""
+        recipe = models.Recipe.objects.create(
+            user=sample_user(),
+            title='Steak and mushroom sauce',
+            time_minutes=5,
+            price=5.00
+        )
+
+        self.assertEqual(str(recipe), recipe.title)
